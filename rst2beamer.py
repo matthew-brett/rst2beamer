@@ -179,7 +179,7 @@ BEAMER_SPEC =   (
                     'action':    'store',
                     'type':      'choice',
                     'dest':      'cb_default_lang',
-                    'choices':   HILITE_OPTIONS.values(),
+                    'choices':   list(HILITE_OPTIONS.values()),
                     'default':   'guess',
                 }
             ),
@@ -273,7 +273,7 @@ def adjust_indent_spaces (strn, orig_width=8, new_width=3):
     match = LEADING_SPACE_RE.match (strn)
     if (match):
         indent_len = match.end() - match.start()
-        indent_cnt = indent_len / orig_width
+        indent_cnt = indent_len // orig_width
         indent_depth = indent_cnt * orig_width
         strn = ' ' * indent_cnt * new_width + strn[indent_depth:]
     return strn
@@ -294,7 +294,7 @@ def index (seq, f, fail=None):
     While this could be written in a neater fashion in Python 2.6, this method
     maintains compatiability with earlier version.
     """
-    for index in (i for i in xrange (len (seq)) if f (seq[i])):
+    for index in (i for i in range (len (seq)) if f (seq[i])):
         return index
     return fail
 
@@ -374,7 +374,7 @@ def wrap_children_in_columns (par_node, children, width=None):
     ## Main:
     # calc width of child columns
     child_cnt = len (children)
-    col_width = width / child_cnt
+    col_width = width // child_cnt
     # set each element of content in a column and add to column set
     new_children = []
     for child in children:
@@ -639,7 +639,7 @@ class ColumnSetDirective (Directive):
             if (excess_width <= 0.0):
                 raise self.error ( \
                     "no room for unsized columns '%f'" % excess_width)
-            col_width = excess_width / len (unsized_cols)
+            col_width = excess_width // len (unsized_cols)
             for child in unsized_cols:
                 child.width = col_width
         elif (width < used_width):
@@ -1297,7 +1297,7 @@ class BeamerTranslator (LaTeXTranslator):
                 begin_str += '[<+-| alert@+>]'
             begin_str += '\n'
             self.out.append(begin_str)
-            if node.has_key('start'):
+            if 'start' in node:
                 self.out.append('\\addtocounter{enumi}{%d}\n' \
                                  % (node['start']-1))
             

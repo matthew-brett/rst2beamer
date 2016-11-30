@@ -16,6 +16,7 @@ git update-index --assume-unchanged output_file.tex
 
 to ask git not to track changes to these files.
 """
+from __future__ import print_function
 
 #################################
 #
