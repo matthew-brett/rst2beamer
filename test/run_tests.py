@@ -16,6 +16,7 @@ git update-index --assume-unchanged output_file.tex
 
 to ask git not to track changes to these files.
 """
+from __future__ import print_function
 
 #################################
 #
@@ -27,9 +28,16 @@ to ask git not to track changes to these files.
 #
 #################################
 
-import txt_mixin, os
+import os
+import sys
 
-cmd_pat = 'rst2beamer.py %s %s'
+# Put txt_mixin directory on the path
+HERE = os.path.dirname(__file__)
+sys.path.append(os.path.join(HERE, 'utils'))
+
+import txt_mixin
+
+cmd_pat = 'rst2beamer %s %s'
 
 
 def compare_two_bodies(actual_body, expected_body):
@@ -125,7 +133,7 @@ if __name__ == '__main__':
     parser = OptionParser(usage)
 
     parser.add_option("-t","--traceback", action="store_true", dest="traceback", \
-                      help="run rst2beamer.py with traceback option.")
+                      help="run rst2beamer with traceback option.")
 
     parser.add_option("-r","--runlatex", action="store_true", dest="runlatex", \
                       help="boolean option to run pdflatex for all the test files.")
